@@ -23,7 +23,7 @@ Welcome to the Course Selling App repository! This is a web application built us
   - User authentication and registration.
   - Users can browse and purchase courses.
   - User dashboard to manage purchased courses.
-  - Video streaming for courses (feature in progress).
+  - Video streaming for courses.
 
 ## Technologies Used
 
@@ -68,6 +68,7 @@ In the server directory, run: node index.js
 7. Start the Frontend:
 
 In the admin-client directory, run: npm run dev
+In the user-client directory, run: npm run dev
 
 ## Usage
 
@@ -81,12 +82,12 @@ In the admin-client directory, run: npm run dev
 1. Once logged in as an admin, access the admin dashboard.
 2. Manage existing courses and upload new courses.
 
-**User Features (Frontend to be implemented):**
+**User Features:**
 
-1. User registration and login (frontend in progress).
-2. Browse and purchase available courses (frontend in progress).
-3. Manage purchased courses (frontend in progress).
-4. Course streaming (feature in progress).
+1. User registration and login.
+2. Browse and purchase available courses.
+3. Manage purchased courses.
+4. Course streaming.
 
 **Course Uploading (Admin Feature):**
 
