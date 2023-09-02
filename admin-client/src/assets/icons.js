@@ -1,0 +1,2 @@
+export const logo = "https://i.ibb.co/MScBRY8/Screenshot-2023-08-21-at-12-02-30-AM-removebg-preview.png";
+export const landingPicture = "https://www.98thpercentile.com/hubfs/Imported_Blog_Media/Picture125-1.jpg";

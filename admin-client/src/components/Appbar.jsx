@@ -2,6 +2,9 @@ import {Button} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {useRecoilState} from 'recoil';
 import { userState } from "../store/atoms/user"; 
+import {logo} from '../assets/icons.js';
+
+
 
 function Appbar(){
 
@@ -14,17 +17,17 @@ function Appbar(){
   
         return(
             <div style={{display:"flex",justifyContent:"space-between"}}>
-                <div>
-                <img style={{width:100}} src="https://i.ibb.co/bR0D8k6/Screenshot-2023-08-15-at-7-25-38-PM-removebg-preview.png" onClick={()=>navigate("/")}/>
-                </div>
-                <div style={{display:"flex",justifyContent:"space-between",height:35}} >
-                  
-                  <div style={{marginRight:10}}>
-                 <Button variant="text" onClick={()=>{navigate("/addcourse")}}>Add Course</Button>
-                 <Button variant="text" onClick={()=>{navigate("/courses")}}>Courses</Button>
-                 </div>
+             
+                <img style={{width:100}} src={logo} alt={"logo"} onClick={()=>navigate("/admin")}/>
 
-                 <Button variant="contained" style={{marginRight:10}} onClick={()=>{localStorage.setItem("token",null);setUserEmail(null); navigate("/") }}>Logout</Button>
+                  <div style={{marginRight:10,marginTop:'10px'}}>
+                 <Button style={{color:"white",textTransform: 'none',borderColor:'white'}} onClick={()=>{navigate("/admin/addcourse")}}>Add Course</Button>
+                 <Button style={{color:"white",textTransform: 'none',borderColor:'white'}} onClick={()=>{navigate("/admin/courses")}}>Courses</Button>
+                 <Button variant="contained" style={{marginLeft:10,textTransform: 'none',color:'inherit',backgroundColor:'white'}} 
+                  onClick={()=>{
+                    localStorage.setItem("token",null);
+                    setUserEmail(null);
+                    navigate("/admin") }}>Logout</Button>
                  </div>
             </div>
         )
@@ -33,11 +36,14 @@ function Appbar(){
     return(
         <div style={{display:"flex",justifyContent:"space-between"}}>
             <div>
-             <img style={{width:100}} src="https://i.ibb.co/bR0D8k6/Screenshot-2023-08-15-at-7-25-38-PM-removebg-preview.png" />
+             <img style={{width:100}} src={logo} alt={"logo"} onClick={()=>navigate("/admin")} />
             </div>
-            <div>
-            <Button variant="contained" style={{marginRight:10}} onClick={()=>{navigate("/login")}}>Signin</Button>
-             <Button variant="contained" style={{marginRight:10}} onClick={()=>{navigate("/signup")}}>Signup</Button>
+            <div style={{marginTop:'10px'}}>
+            <Button variant="outlined" style={{marginRight:10,color:"white",textTransform: 'none',borderColor:'white'}}
+             onClick={()=>{navigate("/admin/login")}}>Sign in</Button>
+
+             <Button variant="contained" style={{marginRight:10,textTransform: 'none',color:'inherit',backgroundColor:'white'}} 
+             onClick={()=>{navigate("/admin/signup")}}>Get Started</Button>
              </div>
         </div>
     )

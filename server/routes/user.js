@@ -1,10 +1,12 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const {authenticatejwt,SecretKey} = require('../middleware/auth');
+const {authenticatejwt} = require('../middleware/auth');
 const router = express.Router();
 const {Course,User} = require('../db/index')
 
+require('dotenv').config();
 
+const SecretKey = process.env.Secret_Key;
 
 //User Routes
 
@@ -17,8 +19,7 @@ router.post('/signup',(req,res) => {
         }
         const userData = new User({username,password});
         userData.save();
-        const token = jwt.sign({username,role:"User"},SecretKey,{expiresIn:'1h'});
-        res.status(200).json({message:"User Created Successfully",token});
+        res.status(200).json({message:"User Created Successfully"});
     })
     }
     catch(err){
@@ -26,19 +27,17 @@ router.post('/signup',(req,res) => {
     }
 })
 
-router.post('/login',authenticatejwt,(req,res) => {
-    if(req.role=="User"){
-        const {username,password} = req.headers;
+router.post('/login',(req,res) => {
+        const {username,password} = req.body;
         User.findOne({username,password}).then((userData) => {
             if(userData){
-                res.status(200).json({message:"Logged in Successfully"});
+                const token = jwt.sign({username,role:"User"},SecretKey,{expiresIn:'1h'});
+                res.status(200).json({message:"Logged in Successfully",token});
             }
             else{
                 res.status(401).json({message:"Invalid username or password"});
             }
         })
-    }
-    else{res.status(401).send("Not An Userid")}
 })
 
 router.get('/courses',authenticatejwt, async (req,res)=>{
@@ -46,16 +45,19 @@ router.get('/courses',authenticatejwt, async (req,res)=>{
     res.status(200).json({courses});
 })
 
-router.post('/courses/:courseId',authenticatejwt, async (req,res)=>{//bugs-able to purchased unpublished courses,able to purchase same course twice
+router.post('/courses/:courseId',authenticatejwt, async (req,res)=>{
     const cid = await Course.findById(req.params.courseId);
     if(cid){
         const username = req.user;
         const user = await User.findOne({username});
             if(user){
+                if (user.purchasedCourses.some(purchasedCourse => purchasedCourse.equals(cid._id))) {
+                    return res.status(401).json({ message: "Course Already Purchased!" });
+                }
                   await user.purchasedCourses.push(cid);
                   await user.save();
                   res.status(201).json({message:"Course purchased Successfully"})
-            }
+                  }
             else{
               res.status(403).json({message:"User doesnot exist"});
             }
@@ -74,5 +76,27 @@ router.get('/purchasedcourses',authenticatejwt,async (req,res)=>{
             res.status(403).json({message:"User doesnot exist"});
         } 
     })
+
+    router.get("/purchased/:courseId", authenticatejwt, async (req, res) => {
+        const courseId = req.params.courseId;
+        try {
+            const username = req.user;
+            const user = await User.findOne({ username }).populate('purchasedCourses');
+            if (user) {
+                const purchasedCourse = user.purchasedCourses.find(course => course._id == courseId);
+                if (purchasedCourse) {
+                    return res.status(200).json(purchasedCourse);
+                } else {
+                    return res.status(401).json({ message: "Course Not Purchased" });
+                }
+            }
+        } catch (error) {
+            return res.status(500).json({ message: "Internal Server Error" });
+        }
+    });
+
+router.get('/me',authenticatejwt,async(req,res)=>{
+   res.status(200).json(req.user);
+})    
 
     module.exports=router;

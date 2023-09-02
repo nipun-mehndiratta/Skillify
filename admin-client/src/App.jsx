@@ -14,19 +14,19 @@ import axios from 'axios';
 function App() {
   
   return (
-    <div style={{width:'100vw',height:'100vh',backgroundColor:'#eeeeee',padding:5}} >
+    <div style={{width:'100vw',minHeight:'100vh',backgroundColor:'#05192d'}} >
      
      <RecoilRoot>
        <Router>
         <InitUser/>
        <Appbar></Appbar>
       <Routes>
-         <Route path="/" element = {<Landing/>} />
-         <Route path="/login" element  = {<Signin/>} />
-         <Route path="/signup" element = {<Signup/>} />
-         <Route path="/addcourse" element = {<AddCourse/>} />
-         <Route path="/courses" element = {<Courses/>} />
-         <Route path ="/course/:id" element = {<Course/>} /> 
+         <Route path="/admin" element = {<Landing/>} />
+         <Route path="/admin/login" element  = {<Signin/>} />
+         <Route path="/admin/signup" element = {<Signup/>} />
+         <Route path="/admin/addcourse" element = {<AddCourse/>} />
+         <Route path="/admin/courses" element = {<Courses/>} />
+         <Route path="/admin/course/:id" element = {<Course/>} /> 
       </Routes>
       </Router>
       </RecoilRoot>

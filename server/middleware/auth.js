@@ -1,12 +1,14 @@
 const jwt = require('jsonwebtoken');
-const SecretKey= "n8n2n6"; 
+require('dotenv').config();
+
+const secretKey = process.env.Secret_Key;
 
 //middleware
 function authenticatejwt(req,res,next){
     const authHeader = req.headers.authorization;
     if(authHeader){
         const token = authHeader.split(' ')[1];
-        jwt.verify(token,SecretKey,(err,retreivedData) => {
+        jwt.verify(token,secretKey,(err,retreivedData) => {
             if(err){res.sendStatus(401);}
             else{
                 req.user = retreivedData.username; 
@@ -16,11 +18,10 @@ function authenticatejwt(req,res,next){
         })
     }
     else{
-        res.sendStatus(401);
+        res.status(401);
     }
 }
 
 module.exports = { 
     authenticatejwt,
-    SecretKey
 }

@@ -29,6 +29,17 @@ get: ({get}) => {
 }
 });
 
+export const courseSubTitle = selector({
+    key: "courseSubTitleState",
+    get: ({get}) =>{
+        const state = get(courseState);
+        if(state.course){
+            return state.course.subtitle;
+        }
+        return "";
+    }
+})
+
 export const courseDescription = selector({
     key: "courseDescriptionState",
     get: ({get})=>{
@@ -46,6 +57,17 @@ export const courseImage = selector({
         const state = get(courseState);
         if(state.course){
             return state.course.imageLink;
+        }
+        return "";
+    }
+});
+
+export const courseVideo = selector({
+    key: "courseVideoState",
+    get: ({get})=>{
+        const state = get(courseState);
+        if(state.course){
+            return state.course.videoLink;
         }
         return "";
     }

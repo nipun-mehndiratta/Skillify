@@ -1,8 +1,11 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const {authenticatejwt,SecretKey} = require('../middleware/auth');
+const {authenticatejwt} = require('../middleware/auth');
 const router = express.Router();
-const {Course,Admin} = require('../db/index')
+const {Course,Admin} = require('../db/index');
+require('dotenv').config();
+
+const SecretKey = process.env.Secret_Key;
 
 //Admin Routes
 router.post('/signup',(req,res) => {

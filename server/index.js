@@ -5,12 +5,13 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const adminRouter = require('./routes/admin')
 const userRouter = require('./routes/user');
+require('dotenv').config();
 
 
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('', { useNewUrlParser: true, useUnifiedTopology: true, dbName: "courses" });
+mongoose.connect(process.env.MONGODB_URI, { dbName: "courses" });
 
 //Routes
 app.use("/admin",adminRouter);
