@@ -11,7 +11,7 @@ import ReactPlayer from 'react-player';
 
 function Course(){
   
-  let {id} = useParams();
+  const {id} = useParams();
 
   const setCourse = useSetRecoilState(courseState);
   const isLoading = useRecoilValue(isCourseLoading); 

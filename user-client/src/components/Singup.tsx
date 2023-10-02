@@ -25,16 +25,20 @@ function Signup(){
             }}></TextField>
             <br/>
             <Button variant={"contained"} style={{textTransform:'none',backgroundColor:'#ea5879'}}
-            onClick={async ()=>{
-               try{
-                const  username = email;
-                const response = await axios.post(`${BASE_URL}/signup`,{username,password});
-                alert(response.data.message);
+            onClick={()=>{
+              axios.post(`${BASE_URL}/signup`,
+              {username:email,
+              password:password}).then((res)=>{
+              if(res.data.message){
+                alert("Signup Successful, Please Login!");
                 navigate("/login");
-               }
-               catch(error){
-                alert("Account already Exists!");
-               }
+              }
+              else{
+                alert("Account Already Exists");
+              }
+            }).catch((err)=>{
+              alert("Please enter valid email and password");
+            })
             }}>Sign up</Button>
         </Card>
       </div>

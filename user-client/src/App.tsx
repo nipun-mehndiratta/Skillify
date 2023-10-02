@@ -1,16 +1,16 @@
 import {BrowserRouter as Router,Routes,Route} from 'react-router-dom';
-import Appbar from './components/Appbar.jsx';
-import Landing from './components/Landing.jsx';
-import Signin from './components/Signin.jsx';
-import Signup from './components/Singup.jsx';
-import Courses from './components/Courses.jsx';
-import Purchased from './components/Purchased.jsx';
-import Course from './components/Course.jsx';
+import Appbar from './components/Appbar.tsx';
+import Landing from './components/Landing.tsx';
+import Signin from './components/Signin.tsx';
+import Signup from './components/Singup.tsx';
+import Courses from './components/Courses.tsx';
+import Purchased from './components/Purchased.tsx';
+import Course from './components/Course.tsx';
 import {RecoilRoot, useSetRecoilState,} from 'recoil';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { BASE_URL } from './config.js';
-import { userState } from './store/atoms/user.js';
+import { BASE_URL } from './config.ts';
+import { userState } from './store/atoms/user.ts';
 
 function App() {
 

@@ -21,7 +21,7 @@ function AddCourse(){
                 
             <Typography style={typographyStyle} > Create New Course</Typography>    
 
-            <TextField fullWidth label='Title' onChange={(e)=>{setTitle(e.target.value)}}></TextField>
+            <TextField fullWidth label='Title' required={true} onChange={(e)=>{setTitle(e.target.value)}}></TextField>
             <br/><br/>
             <TextField fullWidth label='SubTitle' onChange={(e)=>{setSubTitle(e.target.value)}}></TextField>
             <br/><br/>
@@ -34,7 +34,7 @@ function AddCourse(){
             <TextField fullWidth label='Price' onChange={(e)=>{setPrice(e.target.value)}}> </TextField>
              <br/><br/>
             <Button fullWidth variant='contained' style={buttonStyle} onClick={async ()=>{
-                let token = localStorage.getItem("token");
+                const token = localStorage.getItem("token");
                 await axios.post(`${BASE_URL}/admin/courses`,
                 {title:title,subtitle:subTitle,description:description,imageLink:image,videoLink:video,price:price},
                 {headers:{'Authorization':`Bearer ${token}`}});

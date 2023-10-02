@@ -1,10 +1,10 @@
-const express = require('express');
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import adminRouter from './routes/admin';
+import userRouter from './routes/user';
 const app = express();
 const port = 3000;
-const mongoose = require('mongoose');
-const cors = require('cors');
-const adminRouter = require('./routes/admin')
-const userRouter = require('./routes/user');
 require('dotenv').config();
 
 

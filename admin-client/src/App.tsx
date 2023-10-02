@@ -21,6 +21,7 @@ function App() {
         <InitUser/>
        <Appbar></Appbar>
       <Routes>
+         <Route path="/" element = {<Landing/>} />
          <Route path="/admin" element = {<Landing/>} />
          <Route path="/admin/login" element  = {<Signin/>} />
          <Route path="/admin/signup" element = {<Signup/>} />

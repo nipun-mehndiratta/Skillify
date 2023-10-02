@@ -40,7 +40,11 @@ function Signup(){
               else{
                 alert("Account Already Exists");
               }
-            })}}>Sign up</Button>
+            }).catch((err)=>{
+              alert("Please enter valid email and password");
+            })
+            
+            }}>Sign up</Button>
             </Card>
        </div>
     )
