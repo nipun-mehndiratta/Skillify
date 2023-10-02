@@ -7,7 +7,7 @@ import { userCredentials } from '../validators';
 
 require('dotenv').config();
 
-const SecretKey = process.env.Secret_Key;
+const SecretKey = process.env.Secret_Key!;
 
 //User Routes
 
@@ -44,20 +44,21 @@ router.post('/login',(req,res) => {
 })
 
 router.get('/courses',authenticatejwt, async (req,res)=>{
-    const courses = await Course.find({published:true}).populate();
+    const courses = await Course.find({published:true}).populate('');
     res.status(200).json({courses});
 })
 
 router.post('/courses/:courseId',authenticatejwt, async (req,res)=>{
-    const cid = await Course.findById(req.params.courseId);
-    if(cid){
+    const course = await Course.findById(req.params.courseId);
+    if(course){
         const username = req.headers['user'];
         const user = await User.findOne({username});
             if(user){
-                if (user.purchasedCourses.some(purchasedCourse => purchasedCourse.equals(cid._id))) {
+                const courseId = course._id.toString(); 
+                if (user.purchasedCourses.some(purchasedCourse => purchasedCourse.toString() === courseId)) {
                     return res.status(401).json({ message: "Course Already Purchased!" });
                 }
-                  user.purchasedCourses.push(cid);
+                  user.purchasedCourses.push(course as {});
                   await user.save();
                   res.status(201).json({message:"Course purchased Successfully"})
                   }
@@ -86,7 +87,7 @@ router.get('/purchasedcourses',authenticatejwt,async (req,res)=>{
             const username = req.headers['user'];
             const user = await User.findOne({ username }).populate('purchasedCourses');
             if (user) {
-                const purchasedCourse = user.purchasedCourses.find(course => course._id == courseId);
+                const purchasedCourse = user.purchasedCourses.find(course => (course as any)._id == courseId);
                 if (purchasedCourse) {
                     return res.status(200).json(purchasedCourse);
                 } else {

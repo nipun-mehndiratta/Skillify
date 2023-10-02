@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { Request,Response,NextFunction } from 'express';
 require('dotenv').config();
 
-const secretKey = process.env.Secret_Key;
+const secretKey = process.env.Secret_Key!;
 
 //middleware
 function authenticatejwt(req :Request,res :Response,next :NextFunction){

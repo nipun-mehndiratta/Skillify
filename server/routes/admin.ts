@@ -7,7 +7,7 @@ const router = express.Router();
 require('dotenv').config();
 
 
-const SecretKey = process.env.Secret_Key;
+const SecretKey = process.env.Secret_Key!;
 
 //Admin Routes
 router.post('/signup',async (req,res) => {
@@ -72,7 +72,7 @@ router.post('/courses',authenticatejwt, async (req,res) =>{
 router.get("/course/:id",authenticatejwt,async (req,res)=>{
     let cid = req.params.id;
     try{
-        let course = await Course.findById(cid).populate();
+        let course = await Course.findById(cid).populate('');
         res.status(200).json(course);
     }
     catch(error){
@@ -102,7 +102,7 @@ router.put('/courses/:courseId',authenticatejwt, async (req,res)=>{
 
 router.get('/courses',authenticatejwt,async (req,res) => {
     if(req.headers['role']=="Admin"){
-        const courses = await Course.find().populate();
+        const courses = await Course.find().populate('');
         res.status(200).json(courses);
     }
     else{
