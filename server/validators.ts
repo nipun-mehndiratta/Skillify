@@ -3,7 +3,7 @@ import { number, z } from 'zod';
 
 export const userCredentials = z.object({
     username: z.string().email().max(72),
-    password: z.string().min(6).max(72),
+    password: z.string().max(72),
 })
 
 export const courseInput = z.object({
